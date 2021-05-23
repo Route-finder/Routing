@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>Shopping list</title>
+
+    <link rel="stylesheet" href="">
+
+  </head>
+
+  <body>
+      <h1>Shopping list</h1>
+
+
+<div class="form">
+  <label for="item">Add item to list: </label><input type="text" id="item">
+  <button id="submit">Submit item</button>
+  <button id="clear">Clear items</button>
+  <button id="clear">Scan List</button>
+</div>
+
+
+<ul id="list">
+
+</ul>
+<br>
+<div>
+    <button type="button" class="btn btn-primary">Choose A Store</button>
+    <button type="button" class="btn btn-primary">Show the Location of Items</button>
+    <button type="button" class="btn btn-primary">Fastest route to collect Items</button>
+</div>
+
+</body>
+
+  <script>
+   var itemInput = document.getElementById("item");
+   var clear = document.getElementById("clear");
+   var submit = document.getElementById("submit");
+   var list = document.getElementById("list");
+
+   function addItem() {
+     var currentItem = itemInput.value;
+     var listItem = document.createElement("li");
+     listItem.innerHTML = currentItem;
+
+     list.appendChild(listItem);
+
+     itemInput.value = "";
+   }
+
+   submit.onclick = addItem;
+
+   clear.onclick = function() {
+     list.innerHTML = "";
+     itemInput.value = "";
+   }
+
+  </script>
+</html>
