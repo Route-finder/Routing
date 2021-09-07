@@ -1,5 +1,30 @@
 # Store Shopping Project
 
+## Description
+
+### Primary Aim
+The aim of this project is to create a web-based service which allows for a quicker and more
+efficient way to traverse a store, or similar environment. Specifically, this app will be a
+shopping list, with the feature of giving you both:
+ * The most efficient (based on distance to walk) order in which to pick up items
+ * A visual pathway to follow through the store, library, etc.
+
+This idea builds on existing services from department stores, adding what we believe to be a
+key feature of navigation around the store. Existing apps from Walmart and others *do* show 
+item locations, but it is then up to customers to find their way to each point on that map.
+
+### Other Domains
+In addition to use in a setting like a department store, we also envision that this app (or
+at least its foundation) could be used in a variety of environments. Isaac works at the
+circulation desk at Preus Library here at Luther, and I could see this app being extended so
+that, with a list of item call numbers, it would generate an order in which to shelve books,
+and a map showing that optimal path.
+
+More generally, this project has the potential to be quite modular: ideally, it would be able
+to, given a mapping of locations, and a database of items tagged with locations in that map,
+provide a visual and listed optimal path between those items. This is something we may explore
+in Spring, depending on time available.
+
 ## Structure
 - How will the project be organized?
   - [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) setup (as in CS330)
