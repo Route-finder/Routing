@@ -17,18 +17,17 @@
 async function requestinfo(url) {
     return fetch(url)
     .then(response => response.json())
-    .then(json => printData(json))
     .catch(function() {
         console.log("An error occurred");
     });
 }
 
-function printData(data) {
-    console.log(data);
-}
-
 async function loc() {
-    let url = "https://www.loc.gov/item/ihas.200196396/?fo=json";
+    // Get search term provided by user
+    let searchbox = document.getElementById("isbn");
+    let term = searchbox.value;
+
+    let url = "https://www.loc.gov/search/?q=" + term + "&fo=json";
 
     let information = await requestinfo(url);
     console.log(information);
@@ -36,12 +35,21 @@ async function loc() {
 
 /**
  * OCLC's "Classify2" uses a RESTful API supplying XML-formatted data
+ * 
+ * Note that this code would have to be run on the
+ * back-end, due to CORS restrictions. Consider this
+ * an example of the URL parameter(s) and thus the
+ * information we would need from the user.
  */
 function classify() {
+    // Get ISBN provided by user
+    let searchbox = document.getElementById("isbn");
+    let isbn = searchbox.value;
+
     const request = new XMLHttpRequest();
     let baseURL = "http://classify.oclc.org/classify2/Classify?";
 
-    let url = baseURL + "isbn=0679442723&summary=true";
+    let url = baseURL + "isbn=" + isbn + "&summary=true";
 
     request.open("GET", url);
     request.send();
@@ -59,4 +67,4 @@ function main() {
     oclcbutton.addEventListener("click", classify);
 }
 
-main();
+window.onload = main;

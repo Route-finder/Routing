@@ -9,11 +9,16 @@
 <html>
   <head>
     <title>LOC API Test</title>
+    <meta charset="utf-8">
   </head>
   <body>
     <p>Click the buttons below to test the API indicated:</p>
-    <button id="loc">Library of Congress</button>
-    <button id="oclc">OCLC Classify</button>
-    <script src="script/request.js"></script>
+    <div>
+      <label for="isbn">Enter ISBN or search term here:</label>
+      <input type="text" id="isbn">
+      <button id="loc">Library of Congress</button>
+      <button id="oclc">OCLC Classify</button>
+      <script src="script/request.js"></script>
+    </div>
   </body>
 </html>
