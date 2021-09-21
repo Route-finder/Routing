@@ -35,20 +35,16 @@ function filterPreserveLength(list: ListNode[], toUse: String[]): ListNode[] {
 }
 
 // Precondition: list is filtered so we need to visit every node
-// Go left, then go right
-// Using brute force now
+// Remove maximal cost node
 function shortestPath(list: ListNode[]): OutPath {
-    
-    let ltrSum = (path: ListNode[]) => path.reduce((previous, current) => previous + current[1], 0);
-    let rtlSum = (path: ListNode[]) => ltrSum(path.reverse());
-
-    let costWithPivot = Array.from(list.keys()).map(i => {
-        console.log(list.slice(0, i));
-        console.log(list.slice(i));
-        return [ltrSum(list.slice(i)) + rtlSum(list.slice(0, list.length - i)), i]
-    });
-    
-    console.log(costWithPivot)
+    let maxDist: [number, ListNode] = [0, list[0]];
+    for (let value of list.entries()) {
+        if (maxDist[1][1] <  value[1][1]) {
+            maxDist = value;
+        }
+    }
+    let indexToSplitAt = maxDist[0];
+    return [list.slice(0, indexToSplitAt), list.slice(indexToSplitAt+1)]
 }
 
-console.log(shortestPath(upperFloor));
+// console.log(shortestPath(upperFloor));
