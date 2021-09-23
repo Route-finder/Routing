@@ -11,14 +11,14 @@
  */
 
 // Import Node module(s)
-const http = require('http');
+import { createServer } from 'http';
 
 // Initialize server
 const hostname = '127.0.0.1';
 const port = 3000;
 
 // Actually create the server process
-const server = http.createServer((req, res) => {
+const server = createServer((req, res) => {
   // Response given using HTML to a URL
   if (req.url == '/') {
         
