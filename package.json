@@ -1,0 +1,22 @@
+{
+  "name": "store_project",
+  "version": "1.0.0",
+  "description": "A pathfinding application",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Isaac-List/store_project.git"
+  },
+  "author": "Firdavs Atabaev, Alex Dikelsky, Isaac List",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/Isaac-List/store_project/issues"
+  },
+  "homepage": "https://github.com/Isaac-List/store_project#readme"
+}
