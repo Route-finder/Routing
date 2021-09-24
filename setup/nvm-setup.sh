@@ -14,3 +14,6 @@ read -P "Enter a Version to Install: " version
 
 # Install chosen Node.js version
 nvm install $version
+
+# Install Node.js PostgreSQL module
+npm install --save pg

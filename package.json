@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/Isaac-List/store_project/issues"
   },
-  "homepage": "https://github.com/Isaac-List/store_project#readme"
+  "homepage": "https://github.com/Isaac-List/store_project#readme",
+  "dependencies": {
+    "pg": "^8.7.1"
+  }
 }
