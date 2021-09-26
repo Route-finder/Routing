@@ -15,7 +15,10 @@ const http = require('http');
 
 // Initialize server
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
 
 // Actually create the server process
 const server = http.createServer((req, res) => {
@@ -26,10 +29,10 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' }); 
     
     html = "<html><head><title>Hello World!</title></head>\
-            <body><h1>
+            <body><h1>Hello, World!</h1></body></html>"
 
     // set response content    
-    res.write('<html><body><p>Hello, World!</p></body></html>');
+    res.write(html);
     res.end();
   }
 
