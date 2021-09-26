@@ -25,6 +25,9 @@ const server = http.createServer((req, res) => {
     // set response header
     res.writeHead(200, { 'Content-Type': 'text/html' }); 
     
+    html = "<html><head><title>Hello World!</title></head>\
+            <body><h1>
+
     // set response content    
     res.write('<html><body><p>Hello, World!</p></body></html>');
     res.end();
@@ -44,14 +47,14 @@ server.listen(port, hostname, () => {
 });
 
 // PostgreSQL Database Access
-const { Client } = require('pg');
+// const { Client } = require('pg');
 
-const client = new Client({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'testdb',
-    password: '',
-    port: 5432,
-});
+// const client = new Client({
+//     user: 'postgres',
+//     host: 'localhost',
+//     database: 'testdb',
+//     password: '',
+//     port: 5432,
+// });
 
-client.connect();
+// client.connect();
