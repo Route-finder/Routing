@@ -13,9 +13,12 @@
 // Import Node module(s)
 const http = require('http');
 
+// Initialize Express.js server
+
+
 // Initialize server
 const hostname = '127.0.0.1';
-const port = process.env.PORT;
+let port = process.env.PORT;
 if (port == null || port == "") {
   port = 8000;
 }
@@ -28,11 +31,13 @@ const server = http.createServer((req, res) => {
     // set response header
     res.writeHead(200, { 'Content-Type': 'text/html' }); 
     
-    html = "<html><head><title>Hello World!</title></head>\
-            <body><h1>Hello, World!</h1></body></html>"
+    // html = "<html><head><title>Hello World!</title></head>\
+    //         <body><h1>Hello, World!</h1></body></html>";
 
     // set response content    
-    res.write(html);
+    // res.write(html);
+
+    res.render(src/www/hello.html);
     res.end();
   }
 
