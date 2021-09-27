@@ -48,15 +48,3 @@ const server = http.createServer((req, res) => {
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
-
-// PostgreSQL Database Access
-const { Client } = require('pg');
-
-const client = new Client();
-
-client.connect();
-
-client.query('SELECT $1::test as emssage', ['Hello World!'], (err, res) => {
-    console.log(err ? err.stack : res.rows[0].message)
-    client.end()
-})
