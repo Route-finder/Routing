@@ -50,14 +50,8 @@ server.listen(port, hostname, () => {
 });
 
 // PostgreSQL Database Access
-// const { Client } = require('pg');
+const { Client } = require('pg');
 
-// const client = new Client({
-//     user: 'postgres',
-//     host: 'localhost',
-//     database: 'testdb',
-//     password: '',
-//     port: 5432,
-// });
+const client = new Client();
 
-// client.connect();
+client.connect();
