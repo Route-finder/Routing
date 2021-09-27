@@ -15,7 +15,7 @@ const http = require('http');
 
 // Initialize server
 const hostname = '127.0.0.1';
-const port = process.env.PORT;
+let port = process.env.PORT;
 if (port == null || port == "") {
   port = 8000;
 }
@@ -55,3 +55,8 @@ const { Client } = require('pg');
 const client = new Client();
 
 client.connect();
+
+client.query('SELECT $1::test as emssage', ['Hello World!'], (err, res) => {
+    console.log(err ? err.stack : res.rows[0].message)
+    client.end()
+})
