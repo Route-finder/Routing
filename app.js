@@ -15,7 +15,6 @@ const http = require('http');
 
 // Initialize Express.js server
 
-
 // Initialize server
 const hostname = '127.0.0.1';
 let port = process.env.PORT;
