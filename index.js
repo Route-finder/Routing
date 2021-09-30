@@ -16,6 +16,7 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
+
   .get('/cool', (req, res) => res.send(cool()))
   .get('/db', async (req, res) => {
       try {
