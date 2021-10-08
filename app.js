@@ -13,6 +13,8 @@
 // Import Node module(s)
 const http = require('http');
 
+// Initialize Express.js server
+
 // Initialize server
 const hostname = '127.0.0.1';
 let port = process.env.PORT;
@@ -28,11 +30,13 @@ const server = http.createServer((req, res) => {
     // set response header
     res.writeHead(200, { 'Content-Type': 'text/html' }); 
     
-    html = "<html><head><title>Hello World!</title></head>\
-            <body><h1>Hello, World!</h1></body></html>"
+    // html = "<html><head><title>Hello World!</title></head>\
+    //         <body><h1>Hello, World!</h1></body></html>";
 
     // set response content    
-    res.write(html);
+    // res.write(html);
+
+    res.render(src/www/hello.html);
     res.end();
   }
 
@@ -48,3 +52,14 @@ const server = http.createServer((req, res) => {
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+// PostgreSQL Database Access
+const { Client } = require('pg');
+
+const client = new Client();
+
+client.connect();
+
+const res = await client.query('SELECT $1::text as message', ['Hello world!'])
+console.log(res.rows[0].message) // Hello world!
+await client.end()
