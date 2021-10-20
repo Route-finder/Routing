@@ -31,3 +31,24 @@ express()
       }
     })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+function classify(isbn) {
+  // Get ISBN provided by user
+  // let searchbox = document.getElementById("isbn");
+  // let isbn = searchbox.value;
+
+  const request = new XMLHttpRequest();
+  let baseURL = "http://classify.oclc.org/classify2/Classify?";
+
+  let url = baseURL + "isbn=" + isbn + "&summary=true";
+
+  request.open("GET", url);
+  request.send();
+
+  request.onload = (e) => {
+    console.log(request.response);
+    resp = request.response;
+  }
+
+  return resp;
+}
