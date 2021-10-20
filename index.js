@@ -30,6 +30,7 @@ express()
         res.send("Error " + err);
       }
     })
+  .get('/classify', (req, res) => res.render('pages/classification', classify(isbn)))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 function classify(isbn) {
