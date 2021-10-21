@@ -1,6 +1,7 @@
 const cool = require('cool-ascii-faces');
 const express = require('express');
 const path = require('path');
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const PORT = process.env.PORT || 5000;
 
 const { Pool } = require('pg');
@@ -30,13 +31,15 @@ express()
         res.send("Error " + err);
       }
     })
-  .get('/classify', (req, res) => res.render('pages/classification', classify(isbn)))
+  .get('/classify', (req, res) => res.render('pages/classification', classify()))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-function classify(isbn) {
+function classify() {
   // Get ISBN provided by user
   // let searchbox = document.getElementById("isbn");
   // let isbn = searchbox.value;
+
+  let isbn = 9781101972083;
 
   const request = new XMLHttpRequest();
   let baseURL = "http://classify.oclc.org/classify2/Classify?";
