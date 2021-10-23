@@ -11,6 +11,7 @@
     "test": "node test.js"
   },
   "dependencies": {
+    "classify2": "^0.0.3",
     "cool-ascii-faces": "^1.3.4",
     "ejs": "^3.1.5",
     "express": "^4.15.2",

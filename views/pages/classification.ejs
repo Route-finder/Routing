@@ -9,10 +9,19 @@
   <%- include ("../partials/nav.ejs") %>
 
   <div class="container">
-  <h2>Classification Results</h2>
+  <h2>Classification</h2>
+
+  <form>
+    <label for="isbn">
+      Enter an ISBN number
+    </label>
+    <input type="number" id="isbn" value="">
+
+    <input type="submit" name="search" value="Search">
+  </form>
 
   <p>
-    <%= resp %>
+    <%= msg %>
   </p>
 
   </div>
