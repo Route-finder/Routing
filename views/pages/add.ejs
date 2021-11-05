@@ -12,10 +12,7 @@
 
   <%- include ("../partials/nav.ejs") %>
 
-  <div class="container">
-  <h2>Classification</h2>
-
-  <form>
+  <form action="/add", method="POST">
     <label for="isbn">
       Enter an ISBN number
     </label>
@@ -27,8 +24,6 @@
   <p>
     <%= msg %>
   </p>
-
-  </div>
 
 </body>
 </html>
