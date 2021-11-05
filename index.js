@@ -7,6 +7,9 @@
 const express = require('express');
 const app = express();
 
+var multer = require('multer');
+var upload = multer();
+
 const cool = require('cool-ascii-faces');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
@@ -28,6 +31,17 @@ app.listen(PORT, () => {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// for parsing application/json
+app.use(express.json()); 
+
+// for parsing application/xwww-
+app.use(express.urlencoded({ extended: true })); 
+//form-urlencoded
+
+// for parsing multipart/form-data
+app.use(upload.array()); 
+app.use(express.static('public'));
+
 // Define the application routes
 app.get('/', (req, res) => res.render('pages/index'));
 app.get('/cool', (req, res) => res.send(cool()));
@@ -46,12 +60,12 @@ app.get('/db', async (req, res) => {
 });
 app.get('/add', (req, res) => {
   let msg = {msg1: "Hello"};
-  res.render('pages/add', msg);
+  res.render('pages/add', {msg: msg});
 });
 app.post('/add', (req, res) => {
   console.log(req.body);
   const msg = req.body;
-  res.render('pages/add', msg);
+  res.send("Message Received :D" + msg);
 });
 
 // API for React client frontend
@@ -61,26 +75,3 @@ app.get('/api', (req, res) => {
 
 // 404 Route
 app.use((req, res) => res.status(404).render('pages/404'));
-
-function classify() {
-  // Get ISBN provided by user
-  // let searchbox = document.getElementById("isbn");
-  // let isbn = searchbox.value;
-
-  let isbn = 9781101972083;
-
-  const request = new XMLHttpRequest();
-  let baseURL = "http://classify.oclc.org/classify2/Classify?";
-
-  let url = baseURL + "isbn=" + isbn + "&summary=true";
-
-  request.open("GET", url);
-  request.send();
-
-  request.onload = (e) => {
-    console.log(request.response);
-    resp = request.response;
-  }
-
-  return resp;
-}
