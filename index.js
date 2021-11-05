@@ -51,7 +51,6 @@ app.get('/api', (req, res) => {
 });
 
 // 404 Route
-// TODO: Implement a 404 page
 app.use((req, res) => res.status(404).render('pages/404'));
 
 function classify() {
