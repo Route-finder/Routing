@@ -22,8 +22,12 @@
   </form>
 
   <p>
-    <%= msg %>
+    <%= i. %>
   </p>
+
+  <% msg.forEach(function(r) { %>
+    <p><%= r.data %></p>
+  <% }); %>
 
 </body>
 </html>

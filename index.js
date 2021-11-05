@@ -36,6 +36,7 @@ app.get('/db', async (req, res) => {
     const client = await pool.connect();
     const result = await client.query('SELECT * FROM test_table');
     const results = { 'results': (result) ? result.rows : null};
+    console.log(results);
     res.render('pages/db', results );
     client.release();
   } catch (err) {
@@ -43,7 +44,15 @@ app.get('/db', async (req, res) => {
     res.send("Error " + err);
   }
 });
-app.get('/classify', (req, res) => res.render('pages/classification'));
+app.get('/add', (req, res) => {
+  let msg = {msg1: "Hello"};
+  res.render('pages/add', msg);
+});
+app.post('/add', (req, res) => {
+  console.log(req.body);
+  const msg = req.body;
+  res.render('pages/add', msg);
+});
 
 // API for React client frontend
 app.get('/api', (req, res) => {
