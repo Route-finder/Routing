@@ -15,10 +15,19 @@
 <div class="container">
 <h2>Database Results</h2>
 
-<ul>
+<table mui-table mui-table--bordered>
+  <thead>
+    <th>Index</th>
+    <th>Data</th>
+  </thead>
+  <tbody>
     <% results.forEach(function(r) { %>
-        <li><%= r.index %> - <%= r.data %></li>
+      <tr>
+        <td><%= r.index %></td>
+        <td><%= r.data %></td>
+      </tr>
     <% }); %>
+  </tbody>
 </ul>
 
 </div>
