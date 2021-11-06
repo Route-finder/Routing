@@ -10,18 +10,29 @@
 
 <body>
 
-<%- include ("../partials/nav.ejs") %>
+  <%- include ("../partials/nav.ejs") %>
 
-<div class="container">
-<h2>Database Results</h2>
+  <div class="mui-container">
+    <h2>Database Results</h2>
+    <p>
+      The results below come directly from the application database.
+    </p>
+  </div>
 
-<ul>
-    <% results.forEach(function(r) { %>
-        <li><%= r.index %> - <%= r.data %></li>
-    <% }); %>
-</ul>
-
-</div>
+  <table class="striped highlight">
+    <thead>
+      <th>Index</th>
+      <th>Data</th>
+    </thead>
+    <tbody>
+      <% results.forEach(function(r) { %>
+        <tr>
+          <td><%= r.index %></td>
+          <td><%= r.data %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
 
 </body>
 </html>

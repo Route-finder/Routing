@@ -12,23 +12,16 @@
 
   <%- include ("../partials/nav.ejs") %>
 
-  <div class="container">
-  <h2>Classification</h2>
-
-  <form>
+  <form name="search" action="/add", method="POST">
     <label for="isbn">
       Enter an ISBN number
     </label>
     <input type="number" id="isbn" value="">
 
-    <input type="submit" name="search" value="Search">
+    <button type="submit">Search</button>
   </form>
 
-  <p>
-    <%= msg %>
-  </p>
-
-  </div>
+  <p><%= msg.msg1 %></p>
 
 </body>
 </html>
