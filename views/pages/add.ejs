@@ -11,17 +11,20 @@
 <body>
 
   <%- include ("../partials/nav.ejs") %>
+  <div class="mui-container">
+    <form name="search" action="/add" method="POST" enctype="text/html">
+      <label for="isbn">
+        Enter an ISBN number
+      </label>
+      <input type="number" id="isbn" value="" name="isbn">
 
-  <form name="search" action="/add" method="POST" enctype="text/html">
-    <label for="isbn">
-      Enter an ISBN number
-    </label>
-    <input type="number" id="isbn" value="" name="isbn">
+      <input type="submit" value="Search" class="waves-effect waves-light btn yellow">
+    </form>
+  </div>
 
-    <input type="submit" value="Search">
-  </form>
-
-  <p><%= msg.isbn %></p>
+  <div class="mui-panel purple lighten-2">
+    <p><%= msg.isbn %></p>
+  </div>
 
 </body>
 </html>

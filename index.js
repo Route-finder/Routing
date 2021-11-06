@@ -40,9 +40,19 @@ const pool = new Pool({
   }
 });
 
-// Define the application routes
+/**
+ * Define the application routes
+ *  - Homepage (/)
+ *  - Database (/db)
+ *  - Route and Book List (/route)
+ *  - Adding Books (/add)
+ */
+
+// Homepage
 app.get('/', (req, res) => res.render('pages/index'));
 app.get('/cool', (req, res) => res.send(cool()));
+
+// DB Information - From "Hello World" presentation
 app.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
@@ -56,13 +66,36 @@ app.get('/db', async (req, res) => {
     res.send("Error " + err);
   }
 });
+
+// Route Information
+app.get('/route', async (req, res) => {
+  try {
+    const client = await pool.connect();
+                                                  // Use table name
+    const result = await client.query('SELECT * FROM booklist');
+    const results = { 'results': (result) ? result.rows : null};
+    console.log(results);
+    res.render('pages/route', results );
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
+// Adding Books
 app.get('/add', (req, res) => {
   let msg = {isbn: ""};
   res.render('pages/add', {msg: msg});
 });
 app.post('/add', (req, res) => {
   console.log(req.body.isbn);
-  const msg = {isbn: req.body.isbn};
+  // TODO: Submit request to OCLC with ISBN
+
+  // TODO: Add book info (from OCLC response) to Database
+
+  // Placeholder: Print a message
+  const msg = {isbn: req.body.isbn + " has been recorded."};
   res.render('pages/add', {msg: msg});
 });
 
