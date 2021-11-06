@@ -111,3 +111,16 @@ app.use((req, res) => res.status(404).render('pages/404'));
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);
 });
+
+/**
+ * Auxilary Functions
+ * - skip_shelves
+ */
+
+// path: Array of (upper bound (LOC code), distance)
+// initial: LOC code
+function skip_shelves(path, initial) {
+    for (let i in skip_shelves) {
+	let [upper, dist] = path[i];
+    }
+}
