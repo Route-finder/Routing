@@ -1,0 +1,1 @@
+create table floorspreus ( shelves json NOT NULL, floor int NOT NULL, mincode varchar(8) NOT NULL ) ;
