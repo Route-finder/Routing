@@ -76,3 +76,12 @@ app.get('/api', (req, res) => {
 
 // 404 Route
 app.use((req, res) => res.status(404).render('pages/404'));
+
+
+// path: Array of (upper bound (LOC code), distance)
+// initial: LOC code
+function skip_shelves(path, initial) {
+    for (let i in skip_shelves) {
+	let [upper, dist] = path[i];
+    }
+}
