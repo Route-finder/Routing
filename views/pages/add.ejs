@@ -12,16 +12,16 @@
 
   <%- include ("../partials/nav.ejs") %>
 
-  <form name="search" action="/add", method="POST">
+  <form name="search" action="/add" method="POST" enctype="text/html">
     <label for="isbn">
       Enter an ISBN number
     </label>
-    <input type="number" id="isbn" value="">
+    <input type="number" id="isbn" value="" name="isbn">
 
-    <button type="submit">Search</button>
+    <input type="submit" value="Search">
   </form>
 
-  <p><%= msg.msg1 %></p>
+  <p><%= msg.isbn %></p>
 
 </body>
 </html>

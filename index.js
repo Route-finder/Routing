@@ -7,12 +7,29 @@
 const express = require('express');
 const app = express();
 
-var multer = require('multer');
-var upload = multer();
+const multer = require('multer');
+const upload = multer();
+const parser = require('body-parser');
+
+const { body,validationResult } = require('express-validator');
 
 const cool = require('cool-ascii-faces');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
+
+// for parsing application/json
+app.use(express.json()); 
+
+// for parsing application/xwww-form-urlencoded
+app.use(express.urlencoded({ extended: false })); 
+
+// for parsing multipart/form-data
+app.use(upload.array()); 
+app.use(express.static('public'));
+
+// Set the path for web page source files and ejs engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 const { Pool } = require('pg');
 const pool = new Pool({
@@ -21,26 +38,6 @@ const pool = new Pool({
     rejectUnauthorized: false
   }
 });
-
-// Invoke listen method
-app.listen(PORT, () => {
-  console.log(`app listening on port ${PORT}`);
-});
-
-// Set the path for web page source files and ejs engine
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-// for parsing application/json
-app.use(express.json()); 
-
-// for parsing application/xwww-
-app.use(express.urlencoded({ extended: true })); 
-//form-urlencoded
-
-// for parsing multipart/form-data
-app.use(upload.array()); 
-app.use(express.static('public'));
 
 // Define the application routes
 app.get('/', (req, res) => res.render('pages/index'));
@@ -59,13 +56,13 @@ app.get('/db', async (req, res) => {
   }
 });
 app.get('/add', (req, res) => {
-  let msg = {msg1: "Hello"};
+  let msg = {isbn: ""};
   res.render('pages/add', {msg: msg});
 });
 app.post('/add', (req, res) => {
-  console.log(req.body);
-  const msg = req.body;
-  res.send("Message Received :D" + msg);
+  console.log(req.body.isbn);
+  const msg = {isbn: req.body.isbn};
+  res.render('pages/add', {msg: msg});
 });
 
 // API for React client frontend
@@ -75,3 +72,8 @@ app.get('/api', (req, res) => {
 
 // 404 Route
 app.use((req, res) => res.status(404).render('pages/404'));
+
+// Invoke listen method
+app.listen(PORT, () => {
+  console.log(`app listening on port ${PORT}`);
+});
