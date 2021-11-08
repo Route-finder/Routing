@@ -10,5 +10,6 @@ create table booklist IF NOT EXISTS (
     isbn INT PRIMARY KEY,
     author VARCHAR(50),
     title VARCHAR(150),
-    pub_year INT
+    pub_year INT,
+    call_no VARCHAR(40)
 );
