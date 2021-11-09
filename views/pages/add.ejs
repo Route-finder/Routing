@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="index.css">
   <%- include ("../partials/header.ejs") %>
 </head>
 
@@ -18,20 +19,29 @@
       </label>
       <input type="number" id="isbn" value="" name="isbn">
 
-      <input type="submit" value="Search" class="waves-effect waves-light btn yellow">
+      <input type="submit" value="Search" class="waves-effect waves-light btn blue">
     </form>
-  </div>
 
+    <br>
   <!-- If book found, display the result as a message -->
   <% if (result) { %>
-    <div class="mui-panel purple lighten-2">
-      <p>
-        <!-- Relies on API access -->
+    <div  class="mui-container - white">
+      <p id = "book1">
+
+         <!-- Relies on API access -->
         <!-- <%= result.title %> by <%= result.author %> -->
-        (ISBN: <%= result.isbn %>) added to the list!
+      (ISBN: <%= result.isbn %>) added to the list!
+
       </p>
+       
+      
     </div>
   <% } %>
+
+
+
+  </div>
+
 
 </body>
 </html>
