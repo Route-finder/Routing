@@ -91,7 +91,7 @@ app.get('/add', (req, res) => {
   let result = null;
   res.render('pages/add', {result: result});
 });
-app.post('/add', (req, res) => {
+app.post('/add', async (req, res) => {
   // Submit request to OCLC with ISBN
   console.log(req.body.isbn);
   let item = {
@@ -101,7 +101,7 @@ app.post('/add', (req, res) => {
     pub_date: "",
     call_no: ""
   };
-
+/*
   // Add book info (from OCLC response) to Database
   const client = await pool.connect();
   const text = "INSERT INTO booklist() VALUES($1, $2, $3, $4, $5) RETURNING *";
@@ -112,11 +112,11 @@ app.post('/add', (req, res) => {
     console.log(res.rows[0])
   } catch (err) {
     console.log(err.stack)
-  }
+  }*/
 
   // Placeholder: Print a message
-  const msg = {isbn: req.body.isbn + " has been recorded."};
-  res.render('pages/add', {msg: msg});
+  const result = {isbn: req.body.isbn};
+  res.render('pages/add', {result: result});
 });
 
 // API for React client frontend
