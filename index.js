@@ -75,7 +75,7 @@ app.get('/route', async (req, res) => {
   try {
     const client = await pool.connect();
                                                   // Use table name
-    const result = await client.query('SELECT * FROM booklist');
+    const result = await client.query('SELECT * FROM booklist ORDER BY call_no');
     const results = { 'results': (result) ? result.rows : null};
     console.log(results);
     res.render('pages/route', results );
