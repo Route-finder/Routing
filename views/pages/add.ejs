@@ -5,8 +5,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="index.css" type="text/css">
   <%- include ("../partials/header.ejs") %>
+  <style>
+    #book1 {
+      color: brown;
+      font-size: 18px;
+    }
+
+    label {
+      font-size: 18px;
+    }
+
+    form {
+      margin-top: 16px;
+    }
+  </style>
 </head>
 
 <body>
@@ -14,7 +28,7 @@
   <%- include ("../partials/nav.ejs") %>
   <div class="mui-container">
     <form name="search" action="/add" method="POST" enctype="text/html">
-      <label for="isbn">
+      <label for="isbn" style="font-size: 18px; padding: 12px;">
         Enter an ISBN number
       </label>
       <input type="number" id="isbn" value="" name="isbn">
@@ -22,26 +36,20 @@
       <input type="submit" value="Search" class="waves-effect waves-light btn blue">
     </form>
 
-    <br>
   <!-- If book found, display the result as a message -->
-  <% if (result) { %>
-    <div  class="mui-container - white">
-      <p id = "book1">
+    <% if (result) { %>
+      <div  class="mui-container - white" style="margin-top: 36px;">
+        <p id="book1" style="font-size: 18px;">
 
-         <!-- Relies on API access -->
-        <!-- <%= result.title %> by <%= result.author %> -->
-      (ISBN: <%= result.isbn %>) added to the list!
+          <!-- Relies on API access -->
+          <!-- <%= result.title %> by <%= result.author %> -->
+          (ISBN: <%= result.isbn %>) added to the list!
 
-      </p>
-       
-      
-    </div>
-  <% } %>
-
-
+        </p>
+      </div>
+    <% } %>
 
   </div>
-
 
 </body>
 </html>
