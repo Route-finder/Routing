@@ -9,7 +9,10 @@ const app = express();
 
 const multer = require('multer');
 const upload = multer();
-const parser = require('body-parser');
+// This package doesn't work as documented >:(
+const classify = require('classify2');
+const https = require('https');
+const parseString = require('xml2js').parseString;
 
 const { body,validationResult } = require('express-validator');
 
@@ -45,7 +48,7 @@ const pool = new Pool({
  *  - Homepage (/)
  *  - Database (/db)
  *  - Route and Book List (/route)
- *  - Adding Books (/add)
+ *  - Adding Books (/add) GET and POST
  */
 
 // Homepage
@@ -85,14 +88,31 @@ app.get('/route', async (req, res) => {
 
 // Adding Books
 app.get('/add', (req, res) => {
-  let msg = {isbn: ""};
-  res.render('pages/add', {msg: msg});
+  let result = null;
+  res.render('pages/add', {result: result});
 });
 app.post('/add', (req, res) => {
+  // Submit request to OCLC with ISBN
   console.log(req.body.isbn);
-  // TODO: Submit request to OCLC with ISBN
+  let item = {
+    isbn: req.body.isbn,
+    title: "",
+    author: "",
+    pub_date: "",
+    call_no: ""
+  };
 
-  // TODO: Add book info (from OCLC response) to Database
+  // Add book info (from OCLC response) to Database
+  const client = await pool.connect();
+  const text = "INSERT INTO booklist() VALUES($1, $2, $3, $4, $5) RETURNING *";
+  const values = [item.isbn, "", "", "", ""];
+
+  try {
+    const res = await client.query(text, values)
+    console.log(res.rows[0])
+  } catch (err) {
+    console.log(err.stack)
+  }
 
   // Placeholder: Print a message
   const msg = {isbn: req.body.isbn + " has been recorded."};
@@ -114,8 +134,38 @@ app.listen(PORT, () => {
 
 /**
  * Auxilary Functions
+ * - classify
  * - skip_shelves
  */
+
+function classification(isbn) {
+  // Making a request with HTTPS:
+  // https://nodejs.dev/learn/making-http-requests-with-nodejs
+  const options = {
+    hostname: 'http://classify.oclc.org',
+    port: 443,
+    path: '/classify2/Classify?isbn=' + isbn,
+    method: 'GET'
+  };
+
+  let result = "";
+  
+  const req = https.request(options, res => {
+    console.log(`statusCode: ${res.statusCode}`);
+  
+    res.on('data', d => {
+      result = result + d;
+    })
+  })
+  
+  req.on('error', error => {
+    console.error(error);
+  });
+  
+  req.end();
+
+  return result;
+}
 
 // path: Array of (upper bound (LOC code), distance)
 // initial: LOC code
