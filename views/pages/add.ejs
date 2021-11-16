@@ -5,23 +5,51 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="index.css" type="text/css">
   <%- include ("../partials/header.ejs") %>
+  <style>
+    #book1 {
+      color: brown;
+      font-size: 18px;
+    }
+
+    label {
+      font-size: 18px;
+    }
+
+    form {
+      margin-top: 16px;
+    }
+  </style>
 </head>
 
 <body>
 
   <%- include ("../partials/nav.ejs") %>
+  <div class="mui-container">
+    <form name="search" action="/add" method="POST" enctype="text/html">
+      <label for="isbn" style="font-size: 18px; padding: 12px;">
+        Enter an ISBN number
+      </label>
+      <input type="number" id="isbn" value="" name="isbn">
 
-  <form name="search" action="/add", method="POST">
-    <label for="isbn">
-      Enter an ISBN number
-    </label>
-    <input type="number" id="isbn" value="">
+      <input type="submit" value="Search" class="waves-effect waves-light btn blue">
+    </form>
 
-    <button type="submit">Search</button>
-  </form>
+  <!-- If book found, display the result as a message -->
+    <% if (result) { %>
+      <div  class="mui-container - white" style="margin-top: 36px;">
+        <p id="book1" style="font-size: 18px;">
 
-  <p><%= msg.msg1 %></p>
+          <!-- Relies on API access -->
+          <!-- <%= result.title %> by <%= result.author %> -->
+          (ISBN: <%= result.isbn %>) added to the list!
+
+        </p>
+      </div>
+    <% } %>
+
+  </div>
 
 </body>
 </html>

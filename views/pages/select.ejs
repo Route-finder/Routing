@@ -1,0 +1,40 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include ("../partials/header.ejs") %>
+</head>
+
+<body>
+
+  <%- include ("../partials/nav.ejs") %>
+  <div class="mui-container">
+    <table class="striped highlight">
+    <thead>
+      <th>ISBN</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Call Number</th>
+    </thead>
+      <tbody>
+      <% results.forEach(function(r) { %>
+      <tr>
+        <td>
+          <form id=<%= r.isbn%> method="post" action="/add">
+            <input type="submit" class="waves-effect waves-light btn yellow" value=<%= r.isbn %> >
+          </form>
+        </td>
+        <td><%= r.title %></td>
+        <td><%= r.author %></td>
+        <td><%= r.call_no %></td>
+      </tr>
+      <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>
