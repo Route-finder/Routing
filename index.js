@@ -4,29 +4,40 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-const express = require('express');
+import express, { json, urlencoded } from 'express';
 const app = express();
 
-const path = require('path');
-const lc = require('lc_call_number_compare');
+import multer from 'multer';
+const upload = multer();
+
+import { body, validationResult } from 'express-validator';
+
+import cool from 'cool-ascii-faces';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+import lc from 'lc_call_number_compare';
 const PORT = process.env.PORT || 3000;
 
 // for parsing application/json
-app.use(express.json()); 
+app.use(json()); 
 
 // for parsing application/xwww-form-urlencoded
-app.use(express.urlencoded({ extended: false })); 
+app.use(urlencoded({ extended: false })); 
 
 // for parsing multipart/form-data
 app.use(upload.array()); 
 app.use(express.static('public'));
 
 // Set the path for web page source files and ejs engine
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-const { Pool } = require('pg');
-const pool = new Pool({
+import pg from 'pg';
+const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
