@@ -7,16 +7,6 @@
 const express = require('express');
 const app = express();
 
-const multer = require('multer');
-const upload = multer();
-// This package doesn't work as documented >:(
-const classify = require('classify2');
-const https = require('https');
-const parseString = require('xml2js').parseString;
-
-const { body,validationResult } = require('express-validator');
-
-const cool = require('cool-ascii-faces');
 const path = require('path');
 const lc = require('lc_call_number_compare');
 const PORT = process.env.PORT || 3000;
@@ -94,6 +84,9 @@ app.get('/add', (req, res) => {
 app.post('/add', async (req, res) => {
   // Submit request to OCLC with ISBN
   console.log(req.body.isbn);
+  let oclc_obj = classify.get(req.body.isbn);
+  console.log(oclc_obj);
+
   let item = {
     isbn: req.body.isbn,
     title: "",
@@ -101,7 +94,8 @@ app.post('/add', async (req, res) => {
     pub_date: "",
     call_no: ""
   };
-/*
+
+  /*
   // Add book info (from OCLC response) to Database
   const client = await pool.connect();
   const text = "INSERT INTO booklist() VALUES($1, $2, $3, $4, $5) RETURNING *";
@@ -134,38 +128,8 @@ app.listen(PORT, () => {
 
 /**
  * Auxilary Functions
- * - classify
  * - skip_shelves
  */
-
-function classification(isbn) {
-  // Making a request with HTTPS:
-  // https://nodejs.dev/learn/making-http-requests-with-nodejs
-  const options = {
-    hostname: 'http://classify.oclc.org',
-    port: 443,
-    path: '/classify2/Classify?isbn=' + isbn,
-    method: 'GET'
-  };
-
-  let result = "";
-  
-  const req = https.request(options, res => {
-    console.log(`statusCode: ${res.statusCode}`);
-  
-    res.on('data', d => {
-      result = result + d;
-    })
-  })
-  
-  req.on('error', error => {
-    console.error(error);
-  });
-  
-  req.end();
-
-  return result;
-}
 
 // path: Array of (upper bound (LOC code), distance)
 // initial: LOC code
