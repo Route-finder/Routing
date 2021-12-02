@@ -23,7 +23,8 @@ const { body, validationResult } = require('express-validator');
 const cool = require('cool-ascii-faces');
 const path = require('path');
 
-const classify = require('../classify');
+// const classify = require('../classify');
+const classify = require('classify2_api');
 
 const lc = require('lc_call_number_compare');
 const PORT = process.env.PORT || 3000;
@@ -108,7 +109,7 @@ app.post('/add', async (req, res) => {
   };
 
   // Treat the callback as a ".then()" sort of function
-  classify.classify(req.body.isbn, function (data) {
+  classify.classify(req.body.isbn, async function (data) {
     book.title = data.title;
     book.author = data.author;
     book.call_no = data.congress;
