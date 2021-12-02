@@ -4,40 +4,38 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import express, { json, urlencoded } from 'express';
+const express = require('express');
 const app = express();
 
-import multer from 'multer';
+const multer = require('multer');
 const upload = multer();
 
-import { body, validationResult } from 'express-validator';
+const { body, validationResult } = require('express-validator');
 
-import cool from 'cool-ascii-faces';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+const cool = require('cool-ascii-faces');
+const path = require('path');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const classify = require('../classify');
 
-import lc from 'lc_call_number_compare';
+const lc = require('lc_call_number_compare');
 const PORT = process.env.PORT || 3000;
 
 // for parsing application/json
-app.use(json()); 
+app.use(express.json()); 
 
 // for parsing application/xwww-form-urlencoded
-app.use(urlencoded({ extended: false })); 
+app.use(express.urlencoded({ extended: false })); 
 
 // for parsing multipart/form-data
 app.use(upload.array()); 
 app.use(express.static('public'));
 
 // Set the path for web page source files and ejs engine
-app.set('views', join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-import pg from 'pg';
-const pool = new pg.Pool({
+const { Pool } = require('pg');
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
@@ -94,23 +92,32 @@ app.get('/add', (req, res) => {
 });
 app.post('/add', async (req, res) => {
   // Submit request to OCLC with ISBN
-  console.log(req.body.isbn);
-  let oclc_obj = classify.get(req.body.isbn);
-  console.log(oclc_obj);
-
-  let item = {
+  let book = {
     isbn: req.body.isbn,
     title: "",
     author: "",
-    pub_date: "",
     call_no: ""
   };
+  let x = classify.classify(req.body.isbn, function (data) {
+    console.log(data);
+  });
+  console.log("Book:", book);
+
+  // let item = {
+  //   isbn: req.body.isbn,
+  //   title: oclc_obj.title,
+  //   author: oclc_obj.author,
+  //   pub_date: "",
+  //   call_no: oclc_obj.congress
+  // };
+
+  // console.log("item:", item);
 
   /*
   // Add book info (from OCLC response) to Database
   const client = await pool.connect();
   const text = "INSERT INTO booklist() VALUES($1, $2, $3, $4, $5) RETURNING *";
-  const values = [item.isbn, "", "", "", ""];
+  const values = [item.isbn, item.author, item.title, item.call_no];
 
   try {
     const res = await client.query(text, values)
@@ -125,7 +132,26 @@ app.post('/add', async (req, res) => {
 });
 
 // API for React client frontend
-app.get('/api', (req, res) => {
+app.get('/api', async (req, res) => {
+  if (req.body.msg = "list") {
+    try {
+      const client = await pool.connect();
+                                                    // Use table name
+      const result = await client.query('SELECT * FROM booklist ORDER BY call_no');
+      const results = { 'results': (result) ? result.rows : null};
+      console.log(results);
+      // res.render('pages/route', results );
+      client.release();
+    } catch (err) {
+      console.error(err);
+      // res.send("Error " + err);
+    }
+    res.json(results);
+  }
+  else if (req.body.msg = "search") {
+    
+  }
+
   res.json({ message: "Hello from the backend!" });
 });
 
