@@ -28,3 +28,6 @@ in the root of the project directory.
 ## License
 This project is licensed under the second version of the Mozilla Public License, the terms of
 which may be found [here](https://www.mozilla.org/en-US/MPL/2.0/).
+
+## Hosted Deployment
+This project is currently hosted [on Heroku](https://sheltered-reaches-06388.herokuapp.com/).
