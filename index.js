@@ -4,45 +4,47 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-const request = require('request');
-const xml2js = require('xml2js').parseString;
+/**
+ * Node Module Imports (Using CommonJS syntax)
+ */
 
-const ENDPOINT = "http://classify.oclc.org/classify2/Classify?summary=true&isbn=";
-const sec_ep = "http://classify.oclc.org/classify2/Classify?summary=true&owi=";
-
-///////////////////////////////
-
+// Express routing app
 const express = require('express');
 const app = express();
 
+// Form validation
 const multer = require('multer');
 const upload = multer();
-
 const { body, validationResult } = require('express-validator');
 
-const cool = require('cool-ascii-faces');
+// const cool = require('cool-ascii-faces');
+// Routing
 const path = require('path');
 
-// const classify = require('../classify');
+// Classification and LOC sorting
 const classify = require('classify2_api');
-
 const lc = require('lc_call_number_compare');
+
+
+/**
+ * Application Set-up and configuration
+ */
+
+// Hosted port
 const PORT = process.env.PORT || 3000;
 
-// for parsing application/json
+// Response parsers for json, xwww-form-urlencoded, multipart/form-data
 app.use(express.json()); 
+app.use(express.urlencoded({ extended: false }));
+app.use(upload.array());
 
-// for parsing application/xwww-form-urlencoded
-app.use(express.urlencoded({ extended: false })); 
-
-// for parsing multipart/form-data
-app.use(upload.array()); 
 app.use(express.static('public'));
 
 // Set the path for web page source files and ejs engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Initialize connection to PostgreSQL database
 const { Pool } = require('pg');
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -51,12 +53,16 @@ const pool = new Pool({
   }
 });
 
+// Define a 404 Route
+app.use((req, res) => res.status(404).render('pages/404'));
+
 /**
  * Define the application routes
  *  - Homepage (/)
  *  - Database (/db)
  *  - Route and Book List (/route)
  *  - Adding Books (/add) GET and POST
+ *  - React Client API (/api)
  */
 
 // Homepage
@@ -160,10 +166,9 @@ app.get('/api', async (req, res) => {
   res.json({ message: "Hello from the backend!" });
 });
 
-// 404 Route
-app.use((req, res) => res.status(404).render('pages/404'));
-
-// Invoke listen method
+/**
+ * Listen on PORT for requests, start the server
+ */ 
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);
 });
@@ -171,7 +176,6 @@ app.listen(PORT, () => {
 /**
  * Auxilary Functions
  * - skip_shelves
- * - getRequest
  */
 
 // path: Array of (upper bound (LOC code), distance)
