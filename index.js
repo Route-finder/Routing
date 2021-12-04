@@ -53,9 +53,6 @@ const pool = new Pool({
   }
 });
 
-// Define a 404 Route
-app.use((req, res) => res.status(404).render('pages/404'));
-
 /**
  * Define the application routes
  *  - Homepage (/)
@@ -172,6 +169,9 @@ app.get('/api', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);
 });
+
+// Define a 404 Route
+app.use((req, res) => res.status(404).render('pages/404'));
 
 /**
  * Auxilary Functions
