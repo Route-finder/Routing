@@ -12,6 +12,10 @@
 const express = require('express');
 const app = express();
 
+// Temporary CORS enablement
+const cors = require("cors");
+app.use(cors());
+
 // Form validation
 const multer = require('multer');
 const upload = multer();
@@ -137,28 +141,27 @@ app.post('/add', async (req, res) => {
   });
 });
 
-// API for React client frontend
-app.get('/api', async (req, res) => {
-  // if (req.body.msg = "list") {
-  //   try {
-  //     const client = await pool.connect();
-  //                                                   // Use table name
-  //     const result = await client.query('SELECT * FROM booklist ORDER BY call_no');
-  //     const results = { 'results': (result) ? result.rows : null};
-  //     console.log(results);
-  //     // res.render('pages/route', results );
-  //     client.release();
-  //   } catch (err) {
-  //     console.error(err);
-  //     // res.send("Error " + err);
-  //   }
-  //   res.json(results);
-  // }
-  // else if (req.body.msg = "search") {
-    
-  // }
+/**
+ * API for React client frontend
+ */
 
-  res.json({ message: "Hello from the backend!" });
+// Generic "hello world!" api route
+app.get('/api', (req, res) => {
+  res.json({ "message": "Hello from the backend!" });
+});
+
+// Provides list of books from database, no parameters needed
+app.get('/api/books', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM booklist ORDER BY call_no');
+    const results = { 'results': (result) ? result.rows : null};
+    res.json(results);
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.json({"Error": err});
+  }
 });
 
 /**
