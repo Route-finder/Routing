@@ -120,8 +120,6 @@ app.post('/add', async (req, res) => {
 
     // Add book info (from OCLC response) to Database
     const client = await pool.connect();
-    let a = "x";
-    `${a} hello`
     const text = `INSERT INTO booklist VALUES(
       "${book.isbn}", "${book.author}", "${book.title}", "${book.call_no}"
       )`;
@@ -141,24 +139,24 @@ app.post('/add', async (req, res) => {
 
 // API for React client frontend
 app.get('/api', async (req, res) => {
-  if (req.body.msg = "list") {
-    try {
-      const client = await pool.connect();
-                                                    // Use table name
-      const result = await client.query('SELECT * FROM booklist ORDER BY call_no');
-      const results = { 'results': (result) ? result.rows : null};
-      console.log(results);
-      // res.render('pages/route', results );
-      client.release();
-    } catch (err) {
-      console.error(err);
-      // res.send("Error " + err);
-    }
-    res.json(results);
-  }
-  else if (req.body.msg = "search") {
+  // if (req.body.msg = "list") {
+  //   try {
+  //     const client = await pool.connect();
+  //                                                   // Use table name
+  //     const result = await client.query('SELECT * FROM booklist ORDER BY call_no');
+  //     const results = { 'results': (result) ? result.rows : null};
+  //     console.log(results);
+  //     // res.render('pages/route', results );
+  //     client.release();
+  //   } catch (err) {
+  //     console.error(err);
+  //     // res.send("Error " + err);
+  //   }
+  //   res.json(results);
+  // }
+  // else if (req.body.msg = "search") {
     
-  }
+  // }
 
   res.json({ message: "Hello from the backend!" });
 });
