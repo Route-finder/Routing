@@ -30,4 +30,4 @@ This project is licensed under the second version of the Mozilla Public License,
 which may be found [here](https://www.mozilla.org/en-US/MPL/2.0/).
 
 ## Hosted Deployment
-This project is currently hosted [on Heroku](https://sheltered-reaches-06388.herokuapp.com/).
+This project is currently hosted at [library-guide.herokuapp.com](https://library-guide.herokuapp.com/).
