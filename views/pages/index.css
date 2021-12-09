@@ -10,3 +10,7 @@ label {
 form {
   margin-top: 16px;
 }
+
+th, td {
+  padding: 1.5em 3em;
+}

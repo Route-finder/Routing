@@ -22,24 +22,26 @@
     </a>
   </div>
 
-  <table class="striped highlight">
-    <thead>
-      <th>ISBN</th>
-      <th>Title</th>
-      <th>Author</th>
-      <th>Call Number</th>
-    </thead>
-    <tbody>
-      <% results.forEach(function(r) { %>
-        <tr>
-          <td><%= r.isbn %></td>
-          <td><%= r.title %></td>
-          <td><%= r.author %></td>
-          <td><%= r.call_no %></td>
-        </tr>
-      <% }); %>
-    </tbody>
-  </table>
+  <div class="mui-container">
+    <table class="striped highlight">
+      <thead>
+        <th>ISBN</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Call Number</th>
+      </thead>
+      <tbody>
+        <% results.forEach(function(r) { %>
+          <tr>
+            <td><%= r.isbn %></td>
+            <td><%= r.title %></td>
+            <td><%= r.author %></td>
+            <td><%= r.call_no %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
 
 </body>
 </html>
