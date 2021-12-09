@@ -155,6 +155,15 @@ app.get('/api/books', async (req, res) => {
     const client = await pool.connect();
     const result = await client.query('SELECT * FROM booklist ORDER BY call_no');
     const results = { 'results': (result) ? result.rows : null};
+
+    // using lc, sort the items in results
+    /* results = [
+      {
+        ...
+        call_no: "lkjfdslkjfdslkjfds";  
+      }
+    ]*/
+
     res.json(results);
     client.release();
   } catch (err) {
