@@ -124,12 +124,11 @@ app.post('/add', async (req, res) => {
 
     // Add book info (from OCLC response) to Database
     const client = await pool.connect();
-    const text = `INSERT INTO booklist(isbn, author, title, call_no) VALUES(
-      "${book.isbn}", "${book.author}", "${book.title}", "${book.call_no}"
-      )`;
+    const text = "INSERT INTO booklist(isbn, author, title, call_no) VALUES($1, $2, $3, $4) RETURNING *"
+    const values = [book.isbn, book.author, book.title, book.call_no];
   
     try {
-      const res = await client.query(text)
+      const res = await client.query(text, values)
       console.log(res.rows[0])
     } catch (err) {
       console.log(err.stack)
