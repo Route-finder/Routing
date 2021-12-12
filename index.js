@@ -173,7 +173,7 @@ app.get('/api/books', async (req, res) => {
 });
 
 app.post('/api/search', async (req, res) => {
-  
+  console.log(req);
 });
 
 /**
