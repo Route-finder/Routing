@@ -35,7 +35,7 @@ const lc = require('lc_call_number_compare');
  */
 
 // Hosted port
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3100;
 
 // Response parsers for json, xwww-form-urlencoded, multipart/form-data
 app.use(express.json()); 
@@ -173,7 +173,23 @@ app.get('/api/books', async (req, res) => {
 });
 
 app.post('/api/search', async (req, res) => {
-  console.log(req);
+  console.log("Request Body: ", req.body);
+  
+  if (req.body.isbn) {
+  	console.log(req.body.isbn);
+  }
+  else if (req.body.title) {
+  	console.log(req.body.title);
+  }
+  else if (req.body.author) {
+  	console.log(req.body.author)
+  }
+  
+  else {
+  	console.log("Nothing entered");
+  }
+  
+  res.json({"resp": "response placeholder"});
 });
 
 /**
