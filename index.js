@@ -156,13 +156,7 @@ app.get('/api/books', async (req, res) => {
     const result = await client.query('SELECT * FROM booklist ORDER BY call_no');
     const results = { 'results': (result) ? result.rows : null};
 
-    // using lc, sort the items in results
-    /* results = [
-      {
-        ...
-        call_no: "lkjfdslkjfdslkjfds";  
-      }
-    ]*/
+    results.sort(lc.lt);
 
     res.json(results);
     client.release();
