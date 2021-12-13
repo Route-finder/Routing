@@ -116,7 +116,7 @@ app.post('/add', async (req, res) => {
   };
 
   // Treat the callback as a ".then()" sort of function
-  classify.classify(req.body.isbn, async function (data) {
+  classify.classify(req.body.isbn, "isbn", async function (data) {
     book.title = data.title;
     book.author = data.author;
     book.call_no = data.congress;
