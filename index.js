@@ -176,8 +176,36 @@ app.post('/api/search', async (req, res) => {
   console.log("Request Body: ", req.body);
   
   if (req.body.isbn) {
-  	console.log(req.body.isbn);
+    let book = {
+      isbn: req.body.isbn,
+      title: "",
+      author: "",
+      call_no: ""
+    };
+  
+    // Treat the callback as a ".then()" sort of function
+    classify.classify(req.body.isbn, "isbn", async function (data) {
+      book.title = data.title;
+      book.author = data.author;
+      book.call_no = data.congress;
+      console.log("book:", book);
+  
+      // Add book info (from OCLC response) to Database
+      const client = await pool.connect();
+      const text = "INSERT INTO booklist(isbn, author, title, call_no) VALUES($1, $2, $3, $4) RETURNING *"
+      const values = [book.isbn, book.author, book.title, book.call_no];
+    
+      try {
+        const res = await client.query(text, values)
+        console.log(res.rows[0])
+      } catch (err) {
+        console.log(err.stack)
+      }
+
+      res.json({"Status": "Success", "book": book});
+    });
   }
+
   else if (req.body.title) {
   	console.log(req.body.title);
   }
@@ -187,9 +215,8 @@ app.post('/api/search', async (req, res) => {
   
   else {
   	console.log("Nothing entered");
+    res.json("No Values Provided");
   }
-  
-  res.json({"resp": "response placeholder"});
 });
 
 /**
